@@ -18,10 +18,10 @@ public class DriveSubsystem extends SubsystemBase {
     
 
     public DriveSubsystem() {
-        m_leftLeader = new WPI_TalonFX(DriveMotors.kLeftLeaderPort, DriveMotors.kCANBus);
-        m_rightLeader = new WPI_TalonFX(DriveMotors.kRightLeaderPort, DriveMotors.kCANBus);
-        m_leftFollower = new WPI_TalonFX(DriveMotors.kLeftFollowerPort, DriveMotors.kCANBus);
-        m_rightFollower = new WPI_TalonFX(DriveMotors.kRightFollowerPort, DriveMotors.kCANBus);
+        m_leftLeader = new WPI_TalonFX(DriveMotors.kLeftLeaderPort);
+        m_rightLeader = new WPI_TalonFX(DriveMotors.kRightLeaderPort);
+        m_leftFollower = new WPI_TalonFX(DriveMotors.kLeftFollowerPort);
+        m_rightFollower = new WPI_TalonFX(DriveMotors.kRightFollowerPort);
         
         configMotors();
 
@@ -40,6 +40,9 @@ public class DriveSubsystem extends SubsystemBase {
             motor.setNeutralMode(NeutralMode.Brake);
             motor.configStatorCurrentLimit(DriveMotors.kDriveCurrentLimitAmps);
         }
+
+        m_rightLeader.setInverted(true);
+        m_rightFollower.setInverted(true);
     }
     
     public void arcadeDrive(double origSpeed, double origRotation, boolean isJoystick ) {

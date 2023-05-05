@@ -11,7 +11,7 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+// import frc.robot.subsystems.ShooterSubsystem;
 
 
 
@@ -19,7 +19,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RobotContainer {
   private DriveSubsystem m_robotDrive;
   // private ShooterSubsystem m_robotShooter;
-  // private HopperSubsystem m_robotHopper;
+  private HopperSubsystem m_robotHopper;
   private final CommandXboxController m_driverController;
 
   
@@ -29,7 +29,7 @@ public class RobotContainer {
     
     m_robotDrive = new DriveSubsystem();
     // m_robotShooter = new ShooterSubsystem();
-    // m_robotHopper = new HopperSubsystem();
+    m_robotHopper = new HopperSubsystem();
 
     m_robotDrive.setDefaultCommand(new ArcadeDriveCommand(
       () -> m_driverController.getLeftY(),
@@ -43,8 +43,8 @@ public class RobotContainer {
 
   private void configureBindings() {
     // HOPPER
-    // m_driverController.a().onTrue(new InstantCommand(() -> m_robotHopper.startHopper()));
-    // m_driverController.a().onFalse(new InstantCommand(() -> m_robotHopper.stopHopper()));
+    m_driverController.a().onTrue(new InstantCommand(() -> m_robotHopper.startHopper()));
+    m_driverController.a().onFalse(new InstantCommand(() -> m_robotHopper.stopHopper()));
 
     // SHOOTER
     // m_driverController.y().whileTrue(new InstantCommand(() -> m_robotShooter.setPercentVelocity(0.5)));

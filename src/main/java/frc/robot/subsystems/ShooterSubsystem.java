@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.functions.MotionParameters;
@@ -14,8 +14,8 @@ public class ShooterSubsystem extends SubsystemBase {
     double currentVelocity;
     private final double MAX_VELOCITY  = -21666;
 
-    private TalonFX shooterLead = new TalonFX(6);
-    private TalonFX shooterFollow = new TalonFX(7);
+    private TalonSRX shooterLead = new TalonSRX(6);
+    private TalonSRX shooterFollow = new TalonSRX(7);
     private PIDGains shooterGains = new PIDGains(0, 0.05, 0.001, 0.7, 0.0504, 150);
     private MotionParameters shooterMotionParameters = new MotionParameters(0, 0, shooterGains);
 
@@ -48,21 +48,21 @@ public class ShooterSubsystem extends SubsystemBase {
         return this.shooterLead.getMotorOutputVoltage();
     }
 
-    public void set(ControlMode controlMode, double setpoint) {
+    public void setPos(ControlMode controlMode, double setpoint) {
         shooterLead.set(controlMode, setpoint);
     }
 
     public void setPercentVelocity(double percentVelocity) {
-        this.set(ControlMode.Velocity, this.MAX_VELOCITY * percentVelocity);
+        this.setPos(ControlMode.Velocity, this.MAX_VELOCITY * percentVelocity);
     }
 
-    public void configMotionParameters(MotionParameters shooterParam, TalonFX selectedMotor) {
+    public void configMotionParameters(MotionParameters shooterParam, TalonSRX selectedMotor) {
         selectedMotor.configMotionAcceleration(shooterParam.getAcceleration());
         selectedMotor.configMotionCruiseVelocity(shooterParam.getCruiseVelocity());
         setPIDFGains(shooterParam.getGains(), selectedMotor);
     };
 
-    public ErrorCode setPIDFGains(PIDGains gains, TalonFX selectedMotor) {
+    public ErrorCode setPIDFGains(PIDGains gains, TalonSRX selectedMotor) {
         ErrorCode errorCode = ErrorCode.OK;
         ErrorCode[] errors = {
             selectedMotor.config_kP(gains.slot, gains.P), 

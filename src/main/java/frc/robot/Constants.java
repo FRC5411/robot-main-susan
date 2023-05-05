@@ -12,7 +12,7 @@ public final class Constants {
 
   public static class ControllerConstants{
     public final static double kDeadZone = 0.1; 
-    public final static int kXboxControllerPort = 9;
+    public final static int kXboxControllerPort = 0;
   }
 
   public static class DriveMotors {
@@ -24,8 +24,6 @@ public final class Constants {
       55, // Amps 
       100 // MS
     );
-
-    public final static String kCANBus = "canivore"; 
     
     public final static int kLeftLeaderPort = 11;
     public final static int kRightLeaderPort = 10;
@@ -34,18 +32,18 @@ public final class Constants {
   }
 
   public static class HopperMotor{
-    public final static int kHopperPort = 5;
+    public final static int kHopperPort = 22;
     public final static double kHopperSpeed = 0.25;
   }
 
   public static class IntakeMotor{
-    public final static int kIntakeMotorPort = 5;
+    // public final static int kIntakeMotorPort = 5;
   }
 
   public static class ShooterMotors {
-    public final static int kIntakeCargoPort = 5;
-    public final static int kRotateShooterPort = 5;
-    public final static int kShooterTopPort = 5;
-    public final static int kShooterBottomPort = 5;
+    public final static int kIntakeCargoPort = 17;
+    // public final static int kRotateShooterPort = 5;
+    public final static int kShooterTopPort = 14;
+    public final static int kShooterBottomPort = 15;
   }
 }
