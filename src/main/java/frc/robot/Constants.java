@@ -4,16 +4,48 @@
 
 package frc.robot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+
 public final class Constants {
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+  public static class DriveConstants {
+  }
+
+  public static class ControllerConstants{
+    public final static double kDeadZone = 0.1; 
+    public final static int kXboxControllerPort = 9;
+  }
+
+  public static class DriveMotors {
+
+  public static final StatorCurrentLimitConfiguration kDriveCurrentLimitAmps = 
+    new StatorCurrentLimitConfiguration(
+      true, 
+      55, // Amps
+      55, // Amps 
+      100 // MS
+    );
+
+    public final static String kCANBus = "canivore"; 
+    
+    public final static int kLeftLeaderPort = 11;
+    public final static int kRightLeaderPort = 10;
+    public final static int kLeftFollowerPort = 13;
+    public final static int kRightFollowerPort = 12;
+  }
+
+  public static class HopperMotor{
+    public final static int kHopperPort = 5;
+    public final static double kHopperSpeed = 0.25;
+  }
+
+  public static class IntakeMotor{
+    public final static int kIntakeMotorPort = 5;
+  }
+
+  public static class ShooterMotors {
+    public final static int kIntakeCargoPort = 5;
+    public final static int kRotateShooterPort = 5;
+    public final static int kShooterTopPort = 5;
+    public final static int kShooterBottomPort = 5;
   }
 }
