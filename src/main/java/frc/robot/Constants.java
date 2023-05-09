@@ -31,19 +31,23 @@ public final class Constants {
     public final static int kRightFollowerPort = 12;
   }
 
-  public static class HopperMotor{
+  public static class PrimerMotors{
+    public final static double kHopperSpeed = 1;
+    public final static double kShooterIntakeSpeed = 1;
     public final static int kHopperPort = 22;
-    public final static double kHopperSpeed = 0.25;
+    public final static int kShooterIntakePort = 17;    
   }
 
   public static class IntakeMotor{
-    // public final static int kIntakeMotorPort = 5;
+    public final static double kIntakeSpeed = 1;
+    public final static int kIntakeMotorPort = 16;
   }
 
   public static class ShooterMotors {
-    public final static int kIntakeCargoPort = 17;
     // public final static int kRotateShooterPort = 5;
-    public final static int kShooterTopPort = 14;
-    public final static int kShooterBottomPort = 15;
+    // public final static int kHood = 18;
+    public final static int kShooterRightPort = 14;
+    public final static int kShooterLeftPort = 15;
+    public final static double kShooterPower = 1;
   }
 }

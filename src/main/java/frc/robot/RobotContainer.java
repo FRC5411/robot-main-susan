@@ -10,16 +10,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.HopperSubsystem;
-// import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PrimerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-
-
-// READ ME! The hopper and shoot are commented out for testing but feel free to uncomment them to test them out.
 public class RobotContainer {
   private DriveSubsystem m_robotDrive;
-  // private ShooterSubsystem m_robotShooter;
-  private HopperSubsystem m_robotHopper;
+  private ShooterSubsystem m_robotShooter;
+  private PrimerSubsystem m_robotPrimer;
+  private IntakeSubsystem m_robotIntake;
   private final CommandXboxController m_driverController;
 
   
@@ -28,8 +27,9 @@ public class RobotContainer {
     m_driverController = new CommandXboxController(ControllerConstants.kXboxControllerPort);
     
     m_robotDrive = new DriveSubsystem();
-    // m_robotShooter = new ShooterSubsystem();
-    m_robotHopper = new HopperSubsystem();
+    m_robotShooter = new ShooterSubsystem();
+    m_robotPrimer = new PrimerSubsystem();
+    m_robotIntake = new IntakeSubsystem();
 
     m_robotDrive.setDefaultCommand(new ArcadeDriveCommand(
       () -> m_driverController.getLeftY(),
@@ -43,12 +43,14 @@ public class RobotContainer {
 
   private void configureBindings() {
     // HOPPER
-    m_driverController.a().onTrue(new InstantCommand(() -> m_robotHopper.startHopper()));
-    m_driverController.a().onFalse(new InstantCommand(() -> m_robotHopper.stopHopper()));
+    m_driverController.a().onTrue(m_robotPrimer.togglePrimer());
+    
+    // m_driverController.povUp().onTrue(m_robotIntake.intakeExtend());
+    m_driverController.povUp().onTrue(new InstantCommand(()-> m_robotIntake.newExtend()));
+    m_driverController.povDown().onTrue(new InstantCommand(()-> m_robotIntake.newRetract()));
 
-    // SHOOTER
-    // m_driverController.y().whileTrue(new InstantCommand(() -> m_robotShooter.setPercentVelocity(0.5)));
-    // m_driverController.y().onFalse(new InstantCommand(() -> m_robotShooter.setPercentVelocity(0.0)));
+    m_driverController.y().onTrue(new InstantCommand(() -> m_robotShooter.shootNow()));
+
   }
 
   public Command getAutonomousCommand() {
