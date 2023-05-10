@@ -21,17 +21,25 @@ public class PrimerSubsystem extends SubsystemBase {
 
         shouldRun = true;
         configMotors();
+
+        System.out.print("INITAL STATUS OF SHOULDRUN:");
+        System.out.println(shouldRun);
+
     }
 
     public Command togglePrimer() {
+        System.out.print("SHOULD RUN STATUS:");
+        System.out.println(shouldRun);
         if(shouldRun){
             shouldRun = false;
+            System.out.println("STARTING MOTORS");
             return new ParallelCommandGroup(
                 new InstantCommand(() -> runHopper()),
                 new InstantCommand(() -> runShooterIntake())
             );
         } else {
             shouldRun = true;
+            System.out.println("STOPPING MOTORS");
             return stopAll();
         }
     }

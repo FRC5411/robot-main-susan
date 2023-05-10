@@ -31,6 +31,10 @@ public class IntakeSubsystem extends SubsystemBase {
     public void startIntake(){
         intakeMotor.set(ControlMode.PercentOutput, IntakeMotor.kIntakeSpeed);
     }
+
+    public void stopIntake(){
+        intakeMotor.set(ControlMode.PercentOutput, IntakeMotor.kIntakeSpeed);
+    }
     
     public ParallelCommandGroup intakeExtend(){
         return new ParallelCommandGroup(
@@ -49,10 +53,13 @@ public class IntakeSubsystem extends SubsystemBase {
     public void newExtend(){
         intakePneumatic1.set(kForward);
         intakePneumatic2.set(kForward);
+        startIntake();
     }
+    
     public void newRetract(){
         intakePneumatic1.set(kReverse);
         intakePneumatic2.set(kReverse);
+        stopIntake();
     }
 
     public void closePneumatics(){
