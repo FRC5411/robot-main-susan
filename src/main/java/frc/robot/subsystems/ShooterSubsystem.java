@@ -1,10 +1,11 @@
 package frc.robot.subsystems;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ShooterMotors;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -25,6 +26,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_rightShooter.set(ControlMode.PercentOutput, ShooterMotors.kShooterPower);
     }
 
+    public void shootAtSpeed(double vMeters) {
+        m_rightShooter.set(ControlMode.Velocity, MPSToTicks(vMeters));
+    }
+
     public void stopShooters(){
         m_rightShooter.set(ControlMode.PercentOutput, 0);
     }
@@ -35,8 +40,19 @@ public class ShooterSubsystem extends SubsystemBase {
             motor.configFactoryDefault();
             motor.setNeutralMode(NeutralMode.Coast);
             // motor.configStatorCurrentLimit(ShooterMotors.kShooterCurrentLimitAmps);
+            motor.config_kP(0, 0.012865);//2.6363
+            motor.config_kF(0, 0.1421);
         }
 
         m_rightShooter.setInverted(true);
+    }
+
+    public double MPSToTicks(double velocity) {
+        return (velocity / Constants.ShooterMotors.kFlyWheelCirc) * 2048 / 10;
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Speed", 1000 - m_rightShooter.getSelectedSensorVelocity());
     }
 }

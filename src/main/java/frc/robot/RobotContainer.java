@@ -39,12 +39,14 @@ public class RobotContainer {
       true
     ));
 
+    m_robotPrimer.setDefaultCommand(new PrimeShooterCommand(m_robotPrimer, m_robotShooter));
+
     configureBindings();
   }
 
   private void configureBindings() {
     // HOPPER
-    m_driverController.a().onTrue(new PrimeShooterCommand(m_robotPrimer, m_robotShooter));
+    m_driverController.a().onTrue(new InstantCommand(() -> m_robotPrimer.shouldRun ^= true));
     
     m_driverController.povUp().onTrue(new InstantCommand(()-> m_robotIntake.newExtend()));
     m_driverController.povDown().onTrue(new InstantCommand(()-> m_robotIntake.newRetract()));

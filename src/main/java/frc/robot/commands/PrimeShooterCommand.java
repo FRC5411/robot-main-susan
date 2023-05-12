@@ -10,12 +10,10 @@ public class PrimeShooterCommand extends CommandBase {
 
   private PrimerSubsystem robotPrimer;
   private ShooterSubsystem m_robotShooter;
-  private boolean shouldRun;
 
   public PrimeShooterCommand(PrimerSubsystem robotPrimer, ShooterSubsystem m_robotShooter) {
     this.robotPrimer = robotPrimer;
     this.m_robotShooter = m_robotShooter;
-    shouldRun = true;
     addRequirements(robotPrimer);
   }
 
@@ -26,13 +24,11 @@ public class PrimeShooterCommand extends CommandBase {
 
   @Override
   public void execute() { 
-    if (shouldRun) {
-      shouldRun = false;
+    if (robotPrimer.shouldRun) {
       robotPrimer.runHopper();
       robotPrimer.runShooterIntake();
-      m_robotShooter.shootNow();
+      m_robotShooter.shootAtSpeed(0);
     } else {
-      shouldRun = true;
       m_robotShooter.stopShooters();
       robotPrimer.stopAll();
     }

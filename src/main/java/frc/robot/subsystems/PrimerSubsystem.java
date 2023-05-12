@@ -8,10 +8,13 @@ import frc.robot.Constants.PrimerMotors;
 public class PrimerSubsystem extends SubsystemBase {
     private final WPI_TalonSRX hopperMotor;
     private final WPI_TalonSRX intakeCargoMotor;
+    public boolean shouldRun;
 
     public PrimerSubsystem() {
         hopperMotor = new WPI_TalonSRX(PrimerMotors.kHopperPort);
         intakeCargoMotor = new WPI_TalonSRX(PrimerMotors.kShooterIntakePort);
+
+        shouldRun = false;
 
         configMotors();
 

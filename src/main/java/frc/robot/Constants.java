@@ -49,5 +49,6 @@ public final class Constants {
     public final static int kShooterRightPort = 14;
     public final static int kShooterLeftPort = 15;
     public final static double kShooterPower = 1;
+    public final static double kFlyWheelCirc = 0.0;
   }
 }
