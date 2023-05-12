@@ -41,8 +41,8 @@ public class DriveSubsystem extends SubsystemBase {
             motor.configStatorCurrentLimit(DriveMotors.kDriveCurrentLimitAmps);
         }
 
-        m_rightLeader.setInverted(true);
-        m_rightFollower.setInverted(true);
+        m_leftLeader.setInverted(true);
+        m_leftFollower.setInverted(true);
     }
     
     public void arcadeDrive(double origSpeed, double origRotation, boolean isJoystick ) {

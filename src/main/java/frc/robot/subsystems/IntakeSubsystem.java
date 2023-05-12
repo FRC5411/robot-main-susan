@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeMotor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -17,15 +15,14 @@ public class IntakeSubsystem extends SubsystemBase {
     private TalonSRX intakeMotor;
 
     public IntakeSubsystem() {
-        // intakePneumatic1 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 3, 2); // D
-        // intakePneumatic2 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 1, 0); // U
+        // intakePneumatic1 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 3, 1); // D
+        // intakePneumatic2 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 2, 0); // U
 
-        intakePneumatic1 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 3, 1); // D
-        intakePneumatic2 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 2, 0); // U
+        intakePneumatic1 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 1, 3); // D
+        intakePneumatic2 = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 0, 2); // U
+
 
         intakeMotor = new TalonSRX(IntakeMotor.kIntakeMotorPort);
-
-        // closePneumatics();
     }
 
     public void startIntake(){
@@ -33,23 +30,9 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void stopIntake(){
-        intakeMotor.set(ControlMode.PercentOutput, IntakeMotor.kIntakeSpeed);
+        intakeMotor.set(ControlMode.PercentOutput, 0);
     }
     
-    public ParallelCommandGroup intakeExtend(){
-        return new ParallelCommandGroup(
-            new InstantCommand(()->intakePneumatic1.set(kForward)),
-            new InstantCommand(()->intakePneumatic2.set(kForward))
-        );
-    }
-    
-    public ParallelCommandGroup intakeRetract(){
-        return new ParallelCommandGroup(
-            new InstantCommand(()->intakePneumatic1.set(kReverse)),
-            new InstantCommand(()->intakePneumatic2.set(kReverse))
-        );
-    }
-
     public void newExtend(){
         intakePneumatic1.set(kForward);
         intakePneumatic2.set(kForward);

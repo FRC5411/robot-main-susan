@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.PrimeShooterCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PrimerSubsystem;
@@ -43,13 +44,10 @@ public class RobotContainer {
 
   private void configureBindings() {
     // HOPPER
-    m_driverController.a().onTrue(m_robotPrimer.togglePrimer());
+    m_driverController.a().onTrue(new PrimeShooterCommand(m_robotPrimer, m_robotShooter));
     
-    // m_driverController.povUp().onTrue(m_robotIntake.intakeExtend());
     m_driverController.povUp().onTrue(new InstantCommand(()-> m_robotIntake.newExtend()));
     m_driverController.povDown().onTrue(new InstantCommand(()-> m_robotIntake.newRetract()));
-
-    m_driverController.y().onTrue(new InstantCommand(() -> m_robotShooter.shootNow()));
 
   }
 

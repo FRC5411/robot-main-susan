@@ -1,18 +1,22 @@
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.PrimerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class PrimeShooterCommand extends CommandBase {
-  
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
   private PrimerSubsystem robotPrimer;
+  private ShooterSubsystem m_robotShooter;
+  private boolean shouldRun;
 
-  public PrimeShooterCommand(PrimerSubsystem robotPrimer) {
-        this.robotPrimer = robotPrimer;
-        addRequirements(robotPrimer);
+  public PrimeShooterCommand(PrimerSubsystem robotPrimer, ShooterSubsystem m_robotShooter) {
+    this.robotPrimer = robotPrimer;
+    this.m_robotShooter = m_robotShooter;
+    shouldRun = true;
+    addRequirements(robotPrimer);
   }
 
   @Override
@@ -21,11 +25,17 @@ public class PrimeShooterCommand extends CommandBase {
   }
 
   @Override
-  public void execute() {
-    new ParallelCommandGroup(
-        new InstantCommand(() -> robotPrimer.runHopper()), 
-        new InstantCommand(() -> robotPrimer.runShooterIntake())
-    );
+  public void execute() { 
+    if (shouldRun) {
+      shouldRun = false;
+      robotPrimer.runHopper();
+      robotPrimer.runShooterIntake();
+      m_robotShooter.shootNow();
+    } else {
+      shouldRun = true;
+      m_robotShooter.stopShooters();
+      robotPrimer.stopAll();
+    }
   }
 
   @Override

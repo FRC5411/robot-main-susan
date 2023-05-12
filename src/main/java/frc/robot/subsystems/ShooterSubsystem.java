@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterMotors;
 
@@ -24,8 +23,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void shootNow() {
         m_rightShooter.set(ControlMode.PercentOutput, ShooterMotors.kShooterPower);
-        Timer.delay(2); // Wait for two seconds
-        m_rightShooter.set(ControlMode.PercentOutput, 0); // Stop the m_rightShooter
+    }
+
+    public void stopShooters(){
+        m_rightShooter.set(ControlMode.PercentOutput, 0);
     }
 
     public void configMotors() {
@@ -36,6 +37,6 @@ public class ShooterSubsystem extends SubsystemBase {
             // motor.configStatorCurrentLimit(ShooterMotors.kShooterCurrentLimitAmps);
         }
 
-        m_leftShooter.setInverted(true);
+        m_rightShooter.setInverted(true);
     }
 }
