@@ -32,7 +32,7 @@ public final class Constants {
   }
 
   public static class PrimerMotors{
-    public final static double kHopperSpeed = 1;
+    public final static double kHopperSpeed = 0.5;
     public final static double kShooterIntakeSpeed = 1;
     public final static int kHopperPort = 22;
     public final static int kShooterIntakePort = 17;    
@@ -48,7 +48,6 @@ public final class Constants {
     // public final static int kHood = 18;
     public final static int kShooterRightPort = 14;
     public final static int kShooterLeftPort = 15;
-    public final static double kShooterPower = 1;
     public final static double kFlyWheelCirc = 0.0;
   }
 }

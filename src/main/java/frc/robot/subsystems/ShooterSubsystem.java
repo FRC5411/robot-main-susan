@@ -5,7 +5,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.GlobalVars.DriveConfig;
+// import frc.robot.Constants;
 import frc.robot.Constants.ShooterMotors;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -23,12 +24,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shootNow() {
-        m_rightShooter.set(ControlMode.PercentOutput, ShooterMotors.kShooterPower);
+        m_rightShooter.set(ControlMode.PercentOutput, DriveConfig.gDriverSpeed);
     }
 
-    public void shootAtSpeed(double vMeters) {
-        m_rightShooter.set(ControlMode.Velocity, MPSToTicks(vMeters));
-    }
+    // public void shootAtSpeed(double vMeters) {
+    //     m_rightShooter.set(ControlMode.Velocity, MPSToTicks(vMeters));
+    // }
 
     public void stopShooters(){
         m_rightShooter.set(ControlMode.PercentOutput, 0);
@@ -40,16 +41,16 @@ public class ShooterSubsystem extends SubsystemBase {
             motor.configFactoryDefault();
             motor.setNeutralMode(NeutralMode.Coast);
             // motor.configStatorCurrentLimit(ShooterMotors.kShooterCurrentLimitAmps);
-            motor.config_kP(0, 0.012865);//2.6363
-            motor.config_kF(0, 0.1421);
+            // motor.config_kP(0, 0.012865);//2.6363
+            // motor.config_kF(0, 0.1421);
         }
 
         m_rightShooter.setInverted(true);
     }
 
-    public double MPSToTicks(double velocity) {
-        return (velocity / Constants.ShooterMotors.kFlyWheelCirc) * 2048 / 10;
-    }
+    // public double MPSToTicks(double velocity) {
+    //     return (velocity / Constants.ShooterMotors.kFlyWheelCirc) * 2048 / 10;
+    // }
 
     @Override
     public void periodic() {

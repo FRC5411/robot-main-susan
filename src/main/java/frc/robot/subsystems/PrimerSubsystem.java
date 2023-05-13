@@ -35,6 +35,14 @@ public class PrimerSubsystem extends SubsystemBase {
         intakeCargoMotor.set(PrimerMotors.kShooterIntakeSpeed);
     }
 
+    public void stopHopper(){
+        hopperMotor.set(0);
+    }
+
+    public void stopCargoIntake(){
+        intakeCargoMotor.set(0);
+    }
+
     public void configMotors() {
         WPI_TalonSRX[] allMotors = { hopperMotor, intakeCargoMotor };
         for (WPI_TalonSRX motor : allMotors) {
