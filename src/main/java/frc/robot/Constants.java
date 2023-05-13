@@ -45,9 +45,10 @@ public final class Constants {
 
   public static class ShooterMotors {
     // public final static int kRotateShooterPort = 5;
-    // public final static int kHood = 18;
+    // public final static double kFlyWheelCirc = 0.0;
+    public final static int kHoodPort = 18;
+    public final static double kHoodSpeed = 1;
     public final static int kShooterRightPort = 14;
     public final static int kShooterLeftPort = 15;
-    public final static double kFlyWheelCirc = 0.0;
   }
 }

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,18 +14,33 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public TalonFX m_leftShooter;
     public TalonFX m_rightShooter;
+    public WPI_TalonSRX m_hoodMotor;
 
     public ShooterSubsystem() {
         m_leftShooter = new TalonFX(ShooterMotors.kShooterLeftPort);
         m_rightShooter = new TalonFX(ShooterMotors.kShooterRightPort);
+        m_hoodMotor = new WPI_TalonSRX(ShooterMotors.kHoodPort);
 
         configMotors();
 
         m_leftShooter.follow(m_rightShooter);
+        
     }
 
     public void shootNow() {
         m_rightShooter.set(ControlMode.PercentOutput, DriveConfig.gDriverSpeed);
+    }
+
+    public void haltHood(){
+        m_hoodMotor.set(0);
+    }
+
+    public void extendHood(){
+        m_hoodMotor.set(ShooterMotors.kHoodSpeed);
+    }
+
+    public void retractHood(){
+        m_hoodMotor.set(-ShooterMotors.kHoodSpeed * 0.5);
     }
 
     // public void shootAtSpeed(double vMeters) {
@@ -46,6 +62,7 @@ public class ShooterSubsystem extends SubsystemBase {
         }
 
         m_rightShooter.setInverted(true);
+        m_hoodMotor.setInverted(true);
     }
 
     // public double MPSToTicks(double velocity) {

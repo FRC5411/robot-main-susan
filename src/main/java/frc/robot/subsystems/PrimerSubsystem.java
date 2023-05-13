@@ -31,6 +31,10 @@ public class PrimerSubsystem extends SubsystemBase {
         hopperMotor.set(PrimerMotors.kHopperSpeed);
     }
 
+    public void runReverseHopper(){
+        hopperMotor.set(-PrimerMotors.kHopperSpeed);
+    }
+
     public void runShooterIntake() {
         intakeCargoMotor.set(PrimerMotors.kShooterIntakeSpeed);
     }
@@ -41,6 +45,10 @@ public class PrimerSubsystem extends SubsystemBase {
 
     public void stopCargoIntake(){
         intakeCargoMotor.set(0);
+    }
+
+    public void expelBall (){
+        intakeCargoMotor.set(-PrimerMotors.kShooterIntakeSpeed);
     }
 
     public void configMotors() {

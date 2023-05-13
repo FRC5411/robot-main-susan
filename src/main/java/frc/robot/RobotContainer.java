@@ -48,14 +48,11 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // HOPPER
-    m_driverController.y().whileTrue(new InstantCommand(() -> {
-      m_robotPrimer.runShooterIntake();
-    }));
-    
-    m_driverController.y().whileFalse(new InstantCommand(() -> {
-      m_robotPrimer.stopCargoIntake();
-    }));
+    m_driverController.x().whileTrue(new InstantCommand(() -> m_robotPrimer.runShooterIntake()));
+    m_driverController.x().onFalse(new InstantCommand(() -> m_robotPrimer.stopCargoIntake()));
+
+    m_driverController.b().whileTrue(new InstantCommand(() -> m_robotPrimer.expelBall()));
+    m_driverController.b().onFalse(new InstantCommand(() -> m_robotPrimer.stopCargoIntake()));
     
     m_driverController.a().onTrue(new InstantCommand(() -> {
       if(runHopper) {
@@ -70,24 +67,46 @@ public class RobotContainer {
       }
     }));
     
-    m_driverController.povUp().onTrue(new InstantCommand(()-> {
+    // Shooter Extend
+    m_driverController.rightBumper().onTrue(new InstantCommand(()-> {
       runHopper = false;
       m_robotPrimer.runHopper();
       m_robotIntake.newExtend();
     }));
-    m_driverController.povDown().onTrue(new InstantCommand(()-> {
+
+    // Shooter Retract
+    m_driverController.leftBumper().onTrue(new InstantCommand(()-> {
       m_robotIntake.newRetract();
       runHopper = true;
       m_robotPrimer.stopHopper();
     }));
 
-    m_driverController.rightBumper().onTrue(new InstantCommand(() -> {
+    // Hopper
+    m_driverController.leftTrigger()
+      .whileTrue(new InstantCommand(() -> {if(runHopper) m_robotPrimer.runReverseHopper();}))
+      .onFalse(new InstantCommand(() -> m_robotPrimer.stopHopper()));
+
+    m_driverController.rightTrigger()
+      .whileTrue(new InstantCommand(() -> {if(runHopper) m_robotPrimer.runHopper();}))
+      .onFalse(new InstantCommand(() -> m_robotPrimer.stopHopper()));
+
+    // d-Pad
+    m_driverController.povRight().onTrue(new InstantCommand(() -> {
+      changeShooterSpeed(1);
+    }));
+    
+    m_driverController.povLeft().onTrue(new InstantCommand(() -> {
       changeShooterSpeed(0.5);
     }));
 
-    m_driverController.leftBumper().onTrue(new InstantCommand(() -> {
-      changeShooterSpeed(1);
-    }));
+    m_driverController.povUp()
+      .whileTrue(new InstantCommand(() -> m_robotShooter.extendHood()))
+      .onFalse(new InstantCommand(() -> m_robotShooter.haltHood()));
+
+    m_driverController.povDown()
+      .whileTrue(new InstantCommand(() -> m_robotShooter.retractHood()))
+      .onFalse(new InstantCommand(() -> m_robotShooter.haltHood()));  
+    
   }
   
   public void changeShooterSpeed(double newSpeed){
